@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gentleman's Barber - Herrfrisörsalong</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c1810;
+            background-color: #f5f2e8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a0f0a 0%, #2c1810 100%);
+            color: #d4af37;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #d4af37;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #f4d03f;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 15, 10, 0.7), rgba(44, 24, 16, 0.7)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23654321" width="1200" height="800"/><path fill="%238B4513" d="M0 400L200 350L400 380L600 320L800 360L1000 340L1200 380V800H0V400Z"/><circle fill="%23A0522D" cx="300" cy="200" r="50"/><circle fill="%23A0522D" cx="900" cy="150" r="40"/><rect fill="%238B4513" x="100" y="600" width="80" height="200"/><rect fill="%238B4513" x="1000" y="650" width="60" height="150"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            color: #d4af37;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #1a0f0a;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background-color: #f5f2e8;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c1810;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            margin: 20px auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border: 2px solid #e8e8e8;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c1810;
+        }
+
+        .service-card .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d4af37;
+            margin-top: 1rem;
+        }
+
+        /* Booking Section */
+        .booking {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+            color: white;
+        }
+
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .booking-form {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.9);
+            color: #2c1810;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f4d03f;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .booking-info {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .opening-hours {
+            margin-bottom: 2rem;
+        }
+
+        .opening-hours h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        /* Payment Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .payment-method {
+            padding: 1rem;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover,
+        .payment-method.selected {
+            border-color: #d4af37;
+            background-color: #f9f9f9;
+        }
+
+        .payment-method i {
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #2c1810;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image i {
+            font-size: 15rem;
+            color: #d4af37;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1a0f0a 0%, #2c1810 100%);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #d4af37;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            color: #d4af37;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image i {
+                font-size: 8rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card,
+        .booking-form,
+        .booking-info {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <i class="fas fa-cut"></i>
+                <span>Gentleman's Barber</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hem">Hem</a></li>
+                <li><a href="#tjanster">Tjänster</a></li>
+                <li><a href="#boka">Boka Tid</a></li>
+                <li><a href="#om-oss">Om Oss</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hem" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Gentleman's Barber</h1>
+                <p>Professionell herrfrisörsalong med klassisk stil och modern service</p>
+                <a href="#boka" class="btn">Boka Tid Nu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="tjanster" class="services">
+        <div class="container">
+            <h2 class="section-title">Våra Tjänster</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-cut"></i>
+                    <h3>Herrklippning</h3>
+                    <p>Klassisk herrklippning med modern twist. Vi anpassar frisyren efter ditt ansikte och stil.</p>
+                    <div class="price">från 450 kr</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-razor"></i>
+                    <h3>Skäggtrimning</h3>
+                    <p>Professionell skäggtrimning och formning för en välvårdad look.</p>
+                    <div class="price">från 350 kr</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-spa"></i>
+                    <h3>Ansiktsbehandling</h3>
+                    <p>Djuprengörande ansiktsbehandling speciellt anpassad för män.</p>
+                    <div class="price">från 550 kr</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-magic"></i>
+                    <h3>Styling</h3>
+                    <p>Professionell styling med högkvalitativa produkter för den perfekta looken.</p>
+                    <div class="price">från 250 kr</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-crown"></i>
+                    <h3>VIP-paket</h3>
+                    <p>Komplett behandling: klippning, skäggtrimning, ansiktsbehandling och styling.</p>
+                    <div class="price">från 950 kr</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Presentkort</h3>
+                    <p>Ge bort en upplevelse! Våra presentkort gäller på alla tjänster.</p>
+                    <div class="price">från 300 kr</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="boka" class="booking">
+        <div class="container">
+            <h2 class="section-title" style="color: #d4af37;">Boka Din Tid</h2>
+            <div class="booking-container">
+                <div class="booking-form">
+                    <h3 style="color: #d4af37; margin-bottom: 1.5rem;">Bokningsformulär</h3>
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="name">Namn</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-post</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Välj Tjänst</label>
+                            <select id="service" name="service" required>
+                                <option value="">Välj tjänst...</option>
+                                <option value="herrklippning" data-price="450">Herrklippning - 450 kr</option>
+                                <option value="skaggtrimning" data-price="350">Skäggtrimning - 350 kr</option>
+                                <option value="ansiktsbehandling" data-price="550">Ansiktsbehandling - 550 kr</option>
+                                <option value="styling" data-price="250">Styling - 250 kr</option>
+                                <option value="vip-paket" data-price="950">VIP-paket - 950 kr</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Datum</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Tid</label>
+                            <select id="time" name="time" required>
+                                <option value="">Välj tid...</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Anteckningar (valfritt)</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Särskilda önskemål eller information..."></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Boka & Betala</button>
+                    </form>
+                </div>
+                
+                <div class="booking-info">
+                    <div class="opening-hours">
+                        <h3>Öppettider</h3>
+                        <ul class="hours-list">
+                            <li><span>Måndag</span><span>Stängt</span></li>
+                            <li><span>Tisdag</span><span>09:00 - 18:00</span></li>
+                            <li><span>Onsdag</span><span>09:00 - 18:00</span></li>
+                            <li><span>Torsdag</span><span>09:00 - 18:00</span></li>
+                            <li><span>Fredag</span><span>09:00 - 18:00</span></li>
+                            <li><span>Lördag</span><span>09:00 - 16:00</span></li>
+                            <li><span>Söndag</span><span>10:00 - 15:00</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h3 style="color: #d4af37; margin-bottom: 1rem;">Kontaktinformation</h3>
+                        <p><i class="fas fa-map-marker-alt" style="color: #d4af37; margin-right: 10px;"></i>Kungsgatan 15, 111 43 Stockholm</p>
+                        <p><i class="fas fa-phone" style="color: #d4af37; margin-right: 10px;"></i>08-123 456 78</p>
+                        <p><i class="fas fa-envelope" style="color: #d4af37; margin-right: 10px;"></i>info@gentlemansbarber.se</p>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding: 1rem; background: rgba(212, 175, 55, 0.2); border-radius: 5px;">
+                        <h4 style="color: #d4af37; margin-bottom: 0.5rem;">Viktigt att veta:</h4>
+                        <ul style="list-style: none; font-size: 0.9rem;">
+                            <li>• Betalning sker online vid bokning</li>
+                            <li>• Avbokning senast 24h innan</li>
+                            <li>• Vi använder endast premiumprodukter</li>
+                            <li>• Första besöket inkluderar konsultation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="om-oss" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Om Gentleman's Barber</h2>
+                    <p>Vi är en modern herrfrisörsalong som kombinerar klassisk barbertradition med dagens stil och teknik. Vår passion är att ge varje kund en exceptionell upplevelse och den perfekta looken.</p>
+                    <p>Med över 15 års erfarenhet inom branschen erbjuder vi professionella tjänster i en avslappnad och välkomnande miljö. Vi använder endast högkvalitativa produkter och de senaste teknikerna för att säkerställa bästa resultat.</p>
+                    <p>Hos oss är varje kund unik, och vi anpassar våra tjänster efter dina individuella behov och önskemål. Välkommen till oss för en upplevelse utöver det vanliga!</p>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-store"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="kontakt">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Gentleman's Barber</h3>
+                    <p>Din professionella herrfrisörsalong i Stockholm. Vi skapar den perfekta looken för den moderna gentlemannen.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontakt</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Kungsgatan 15, 111 43 Stockholm</p>
+                    <p><i class="fas fa-phone"></i> 08-123 456 78</p>
+                    <p><i class="fas fa-envelope"></i> info@gentlemansbarber.se</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Öppettider</h3>
+                    <ul>
+                        <li>Mån: Stängt</li>
+                        <li>Tis-Fre: 09:00 - 18:00</li>
+                        <li>Lör: 09:00 - 16:00</li>
+                        <li>Sön: 10:00 - 15:00</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Följ Oss</h3>
+                    <p>
+                        <a href="#"><i class="fab fa-facebook"></i> Facebook</a><br>
+                        <a href="#"><i class="fab fa-instagram"></i> Instagram</a><br>
+                        <a href="#"><i class="fab fa-google"></i> Google Reviews</a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gentleman's Barber. Alla rättigheter förbehållna.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 style="color: #2c1810; margin-bottom: 1rem;">Slutför Betalning</h2>
+            <div id="bookingSummary" style="background: #f9f9f9; padding: 1rem; border-radius: 5px; margin-bottom: 1rem;">
+                <!-- Booking summary will be inserted here -->
+            </div>
+            
+            <h3 style="color: #2c1810; margin-bottom: 1rem;">Välj Betalningsmetod</h3>
+            <div class="payment-methods">
+                <div class="payment-method" data-method="card">
+                    <i class="fas fa-credit-card"></i>
+                    <div>Kort</div>
+                </div>
+                <div class="payment-method" data-method="swish">
+                    <i class="fas fa-mobile-alt"></i>
+                    <div>Swish</div>
+                </div>
+                <div class="payment-method" data-method="klarna">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div>Klarna</div>
+                </div>
+            </div>
+            
+            <div id="paymentForm" style="display: none;">
+                <div class="form-group">
+                    <label for="cardNumber">Kortnummer</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="expiry">Utgångsdatum</label>
+                        <input type="text" id="expiry" placeholder="MM/ÅÅ" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cardName">Namn på kort</label>
+                    <input type="text" id="cardName" placeholder="Ditt namn">
+                </div>
+            </div>
+            
+            <button id="confirmPayment" class="btn" style="width: 100%; margin-top: 1rem;" disabled>Bekräfta Betalning</button>
+        </div>
+    </div>
+
+    <script>
+        // Set minimum date to today
+        document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+        // Booking form handling
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const bookingData = Object.fromEntries(formData);
+            
+            // Get selected service price
+            const serviceSelect = document.getElementById('service');
+            const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+            const price = selectedOption.getAttribute('data-price');
+            
+            // Create booking summary
+            const summary = `
+                <h4 style="color: #2c1810; margin-bottom: 1rem;">Bokningssammanfattning</h4>
+                <p><strong>Namn:</strong> ${bookingData.name}</p>
+                <p><strong>Telefon:</strong> ${bookingData.phone}</p>
+                <p><strong>E-post:</strong> ${bookingData.email}</p>
+                <p><strong>Tjänst:</strong> ${selectedOption.text}</p>
+                <p><strong>Datum:</strong> ${bookingData.date}</p>
+                <p><strong>Tid:</strong> ${bookingData.time}</p>
+                
